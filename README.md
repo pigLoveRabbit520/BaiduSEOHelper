@@ -11,7 +11,12 @@ npm install baidu_seo_helper
 
 ## getArticleOriginality
 参数 articleContent string  
-返回值 json
+返回值 json  
+举例 key为句子，value是该句子的编辑距离
+```
+{ '正确的小学英语学习方法对小学生的英语学习起着举足轻重的作用，是一个不容忽视的问题': 2,
+  '英语学习对很多小学生来说一直是一件头疼的事情，很多学生都不知道该怎么学习，家长们看到孩子成绩不理想可是却束手无策，不知道该怎么辅导孩子学习英语': 16 }
+```
 
 # 简单示例
 ```
