@@ -40,7 +40,7 @@ async function isURLIncluded(articleUrl) {
     if(firstBlock.length > 0) {
         let firstLinkText = firstBlock.find('.f13 > a').eq(0).text();
         // 三个.加一个空格
-        firstLinkText = firstLinkText.split('...')[0];
+        firstLinkText = firstLinkText.split('...')[0].trim();
         // 域名开头
         // 带protocol
         if(articleUrl.substr(0, firstLinkText.length) === firstLinkText) {
