@@ -38,8 +38,8 @@ async function isURLIncluded(articleUrl) {
     let firstBlock = $('#1');
     let emptyBlock = $('#container .content_none');
     if(firstBlock.length > 0) {
-        let firstLinkText = firstBlock.find('.f13 > a').eq(0).text();
-        // 三个.加一个空格
+        let firstLinkText = firstBlock.find('.f13 > a > b').eq(0).text();
+        // 三个.和四个.都会有
         firstLinkText = firstLinkText.split('...')[0].trim();
         // 域名开头
         // 带protocol
