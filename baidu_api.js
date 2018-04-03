@@ -31,9 +31,10 @@ function sendRequest(options) {
     });
 }
 
-async function isURLIncluded(articleUrl) {
-    let urlParsed = URL.parse(articleUrl);
-    let body = await sendRequest(baiduSearchUrl + articleUrl);
+async function isURLIncluded(url) {
+	url = url.trim();
+    let urlParsed = URL.parse(url);
+    let body = await sendRequest(baiduSearchUrl + url);
     let $ = cheerio.load(body);
     let firstBlock = $('#1');
     let emptyBlock = $('#container .content_none');
@@ -43,12 +44,12 @@ async function isURLIncluded(articleUrl) {
         firstLinkText = firstLinkText.split('...')[0].trim();
         // 域名开头
         // 带protocol
-        if(articleUrl.substr(0, firstLinkText.length) === firstLinkText) {
+        if(url.substr(0, firstLinkText.length) === firstLinkText) {
             return true;
         }
         let protocol = urlParsed.protocol + "//";
-        let articleUrlNoProtocol = articleUrl.substr(protocol.length);
-        return articleUrlNoProtocol.substr(0, firstLinkText.length) === firstLinkText
+        let urlNoProtocol = url.substr(protocol.length);
+        return urlNoProtocol.substr(0, firstLinkText.length) === firstLinkText
     } else if(emptyBlock.length > 0) {
         return false;
     } else {
