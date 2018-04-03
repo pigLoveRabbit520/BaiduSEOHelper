@@ -32,7 +32,7 @@ function sendRequest(options) {
 }
 
 async function isURLIncluded(url) {
-	url = url.trim();
+    url = url.trim();
     let urlParsed = URL.parse(url);
     let body = await sendRequest(baiduSearchUrl + url);
     let $ = cheerio.load(body);
