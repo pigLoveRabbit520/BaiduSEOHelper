@@ -17,3 +17,12 @@ describe('结果中不带...的', function() {
         assert.equal(res, true);
     });
 });
+
+
+describe('不收录的，第一行出现没找到该url', function() {
+    it('should return false', async function() {
+        let url = 'http://bbs.pageadmin.net/showtopic-38806.aspx';
+        let res = await seoHelper.isURLIncluded(url);
+        assert.equal(res, false);
+    });
+});

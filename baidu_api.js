@@ -37,8 +37,12 @@ async function isURLIncluded(url) {
     let body = await sendRequest(baiduSearchUrl + url);
     let $ = cheerio.load(body);
     let firstBlock = $('#1');
-    let emptyBlock = $('#container .content_none');
-    if(firstBlock.length > 0) {
+    let noneBlock = $('#container > .content_none');
+    let hitTopIndex = $('#content_left > div.hit_top_new').index('#content_left > div');
+     // 先判断空元素
+    if (noneBlock.length > 0 || hitTopIndex === 0) {
+        return false;
+    } else if(firstBlock.length > 0) {
         let firstLinkText = firstBlock.find('.f13 > a > b').eq(0).text();
         // 三个.和四个.都会有
         firstLinkText = firstLinkText.split('...')[0].trim();
@@ -50,8 +54,6 @@ async function isURLIncluded(url) {
         let protocol = urlParsed.protocol + "//";
         let urlNoProtocol = url.substr(protocol.length);
         return urlNoProtocol.substr(0, firstLinkText.length) === firstLinkText
-    } else if(emptyBlock.length > 0) {
-        return false;
     } else {
         throw new Error('访问频率过快');
     }
