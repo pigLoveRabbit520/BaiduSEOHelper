@@ -2,7 +2,25 @@ const request = require('request');
 const cheerio = require('cheerio');
 const tool = require('./tool');
 const levenshtein = require('levenshtein');
-let URL = require('url');
+const URL = require('url');
+class Log {
+    constructor(open) {
+        this.open = open
+    }
+
+    setOpen(open) {
+        this.open = open;
+    }
+
+    print(msg) {
+        if (this.open) {
+            console.log(msg);
+        }
+    }
+}
+// 日志打印管理
+const log = new Log(false);
+
 
 const baiduSearchUrl = 'https://www.baidu.com/s?wd=';
 const baiduCharLimt = 38;
@@ -103,7 +121,7 @@ async function getStatementEditDistance(statement) {
             editDistance = Math.min.apply(null, tempEditDistanceArr);
         }
     } catch(err) {
-        console.log(`detect statement ${statement} failed`);
+        log.print(`detect statement ${statement} failed`);
     }
     return editDistance;
 }
@@ -167,14 +185,14 @@ async function getArticleOriginality(articleContent) {
         sentence = sentence.trim();
         if(sentence && sentence.length > ignoreCharsLen) {
             try {
-                console.log('detect sentence ' + sentence);
+                log.print('detect sentence ' + sentence);
                 let editDis = await getSentenceEditDistance(sentence);
-                console.log('sentence ' + sentence + ' result is ' + editDis);
+                log.print('sentence ' + sentence + ' result is ' + editDis);
                 if(editDis >= 0) {
                     result[sentence] = editDis;
                 }
             } catch(err) {
-                console.log('detect sentence ' + sentence.substr(0, 10) + ' failed ' + err.message)
+                log.print('detect sentence ' + sentence.substr(0, 10) + ' failed ' + err.message)
             }
         }
     }
@@ -187,5 +205,4 @@ module.exports.getSentenceEditDistance = getSentenceEditDistance;
 
 module.exports.getArticleOriginality = getArticleOriginality;
 
-
-
+module.exports.setLogOpen = log.setOpen;
