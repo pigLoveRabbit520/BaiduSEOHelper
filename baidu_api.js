@@ -20,6 +20,9 @@ class Log {
 }
 // 日志打印管理
 const log = new Log(false);
+function setOpen(open) {
+    log.setOpen(open);
+}
 
 
 const baiduSearchUrl = 'https://www.baidu.com/s?wd=';
@@ -205,4 +208,4 @@ module.exports.getSentenceEditDistance = getSentenceEditDistance;
 
 module.exports.getArticleOriginality = getArticleOriginality;
 
-module.exports.setLogOpen = log.setOpen;
+module.exports.setLogOpen = setOpen;
